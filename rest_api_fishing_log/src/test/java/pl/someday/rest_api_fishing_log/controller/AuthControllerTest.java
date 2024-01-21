@@ -9,9 +9,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import pl.someday.rest_api_fishing_log.dto.JWTAuthenticationResponse;
-import pl.someday.rest_api_fishing_log.dto.SignUpRequest;
-import pl.someday.rest_api_fishing_log.dto.SingInRequest;
+import pl.someday.rest_api_fishing_log.dto.AuthDTO.JWTAuthenticationResponse;
+import pl.someday.rest_api_fishing_log.dto.AuthDTO.SignUpRequest;
+import pl.someday.rest_api_fishing_log.dto.AuthDTO.SingInRequest;
 import pl.someday.rest_api_fishing_log.service.AuthenticationService;
 
 import static org.mockito.Mockito.doNothing;
