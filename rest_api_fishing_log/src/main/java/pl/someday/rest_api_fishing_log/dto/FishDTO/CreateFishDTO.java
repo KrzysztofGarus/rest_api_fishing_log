@@ -25,10 +25,5 @@ BigDecimal length,
 @Min(0)
 @Max(999)
 @NumberFormat(pattern = "0.#")
-BigDecimal weight,
-
-@NotNull
-@Min(0)
-Long sessionId
-
+BigDecimal weight
 ) {}
