@@ -1,4 +1,4 @@
-package pl.someday.rest_api_fishing_log.dto;
+package pl.someday.rest_api_fishing_log.dto.AuthDTO;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
