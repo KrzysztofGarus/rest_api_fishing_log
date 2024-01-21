@@ -3,7 +3,7 @@ package pl.someday.rest_api_fishing_log.dto.FishNameDTO;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 
-public record FishNameDTO(
+public record PatchFishNameDTO(
 
 @Valid
 
