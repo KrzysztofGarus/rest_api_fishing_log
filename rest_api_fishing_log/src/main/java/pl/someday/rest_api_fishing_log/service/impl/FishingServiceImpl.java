@@ -7,11 +7,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import jakarta.validation.Valid;
-import pl.someday.rest_api_fishing_log.dto.FishDTO.CreateFishDTO;
-import pl.someday.rest_api_fishing_log.dto.FishDTO.PatchFishDTO;
+import pl.someday.rest_api_fishing_log.dto.FishDTO.CreateFishRequest;
+import pl.someday.rest_api_fishing_log.dto.FishDTO.FishResponse;
+import pl.someday.rest_api_fishing_log.dto.FishDTO.PatchFishRequest;
 import pl.someday.rest_api_fishing_log.dto.FishingSessionDTO.CreateFishingSessionRequest;
+import pl.someday.rest_api_fishing_log.dto.FishingSessionDTO.FishingSessionResponse;
 import pl.someday.rest_api_fishing_log.dto.FishingSessionDTO.PatchFishingSessionRequest;
 import pl.someday.rest_api_fishing_log.model.Fish;
+import pl.someday.rest_api_fishing_log.model.FishName;
 import pl.someday.rest_api_fishing_log.model.FishingSession;
 import pl.someday.rest_api_fishing_log.repository.FishNameRepository;
 import pl.someday.rest_api_fishing_log.repository.FishRepository;
@@ -28,14 +31,18 @@ public class FishingServiceImpl implements FishingService {
     private final FishingSpotRepository fishingSpotRepository;
     private final FishingSessionRepository fishingSessionRepository;
     private final UserRepository userRepository;
+    private final ModelConverterImpl modelConverter;
 
-    public FishingServiceImpl(FishRepository fishRepository, FishNameRepository fishNameRepository, FishingSpotRepository fishingSpotRepository, FishingSessionRepository fishingSessionRepository,
-     UserRepository userRepository) {
+
+    public FishingServiceImpl(FishRepository fishRepository, FishNameRepository fishNameRepository, FishingSpotRepository fishingSpotRepository, 
+        FishingSessionRepository fishingSessionRepository,UserRepository userRepository, ModelConverterImpl modelConverter) {
+
         this.fishRepository = fishRepository;
         this.fishNameRepository = fishNameRepository;
         this.fishingSpotRepository = fishingSpotRepository;
         this.fishingSessionRepository = fishingSessionRepository;
         this.userRepository = userRepository;
+        this.modelConverter = modelConverter;
     }
 
     @Override
@@ -65,7 +72,7 @@ public class FishingServiceImpl implements FishingService {
         fishingSessionRepository.save(fishingSession);
     }
 
-    public void addFishToSession(Long id, @Valid CreateFishDTO createFishDTO) {
+    public void addFishToSession(Long id, @Valid CreateFishRequest createFishDTO) {
         Fish fish = new Fish();
         fish.setFishName(fishNameRepository.findById(createFishDTO.fishNameId()).orElseThrow());
         fish.setFishingSession(fishingSessionRepository.findById(id).orElseThrow());
@@ -91,7 +98,7 @@ public class FishingServiceImpl implements FishingService {
     }
 
     @Override
-    public void updateFish(Long id, @Valid PatchFishDTO patchFishDTO) {
+    public void updateFish(Long id, @Valid PatchFishRequest patchFishDTO) {
         Fish fish = fishRepository.findById(id).orElseThrow();
         if(patchFishDTO.fishNameId() != null){
             fish.setFishName(fishNameRepository.findById(patchFishDTO.fishNameId()).orElseThrow());
@@ -104,4 +111,36 @@ public class FishingServiceImpl implements FishingService {
         }
         fishRepository.save(fish);
     }
+
+    @Override
+    public FishName getFishName(Long id) {
+        return fishNameRepository.findById(id).orElseThrow();
+    }
+
+    @Override
+    public Fish getFish(Long id) {
+        return fishRepository.findById(id).orElseThrow();
+        
+    }
+
+    @Override
+    public FishResponse getFishResponse(Long FishId) {
+        return modelConverter.convertFishToFishResponse(fishRepository.findById(FishId).orElseThrow());
+    }
+
+    @Override
+    public FishingSession getFishingSession(Long id) {
+        return fishingSessionRepository.findById(id).orElseThrow();
+    }
+
+    @Override
+    public FishingSessionResponse getFishingSessionResponse(Long SessionId) {
+        
+        return modelConverter.convertFishingSessionToFishingSessionResponse(fishingSessionRepository.findById(SessionId).orElseThrow());
+    }
+
+    
+
+    
+
 }
