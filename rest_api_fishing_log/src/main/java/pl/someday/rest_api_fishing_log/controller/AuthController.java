@@ -12,7 +12,7 @@ import jakarta.validation.Valid;
 import pl.someday.rest_api_fishing_log.dto.AuthDTO.JWTAuthenticationResponse;
 import pl.someday.rest_api_fishing_log.dto.AuthDTO.SignUpRequest;
 import pl.someday.rest_api_fishing_log.dto.AuthDTO.SingInRequest;
-import pl.someday.rest_api_fishing_log.service.AuthenticationService;
+import pl.someday.rest_api_fishing_log.service.impl.AuthenticationServiceImpl;
 
 
 @RestController
@@ -20,7 +20,7 @@ import pl.someday.rest_api_fishing_log.service.AuthenticationService;
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final AuthenticationService authenticationService;
+    private final AuthenticationServiceImpl authenticationService;
 
     @PostMapping("/register")
     public ResponseEntity<String> signUp(@RequestBody @Valid SignUpRequest signUpRequest){
