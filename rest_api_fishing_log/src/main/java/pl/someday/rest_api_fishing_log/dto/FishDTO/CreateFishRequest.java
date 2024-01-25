@@ -9,7 +9,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 
-public record CreateFishDTO(
+public record CreateFishRequest(
 
 @Valid
 

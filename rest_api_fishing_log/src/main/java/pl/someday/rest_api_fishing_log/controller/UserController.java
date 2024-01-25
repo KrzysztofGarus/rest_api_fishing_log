@@ -1,12 +1,18 @@
 package pl.someday.rest_api_fishing_log.controller;
 
 import lombok.RequiredArgsConstructor;
-import pl.someday.rest_api_fishing_log.dto.FishDTO.CreateFishDTO;
-import pl.someday.rest_api_fishing_log.dto.FishDTO.PatchFishDTO;
+import pl.someday.rest_api_fishing_log.dto.FishDTO.CreateFishRequest;
+import pl.someday.rest_api_fishing_log.dto.FishDTO.FishResponse;
+import pl.someday.rest_api_fishing_log.dto.FishDTO.PatchFishRequest;
 import pl.someday.rest_api_fishing_log.dto.FishingSessionDTO.CreateFishingSessionRequest;
+import pl.someday.rest_api_fishing_log.dto.FishingSessionDTO.FishingSessionResponse;
 import pl.someday.rest_api_fishing_log.dto.FishingSessionDTO.PatchFishingSessionRequest;
+import pl.someday.rest_api_fishing_log.model.FishName;
 import pl.someday.rest_api_fishing_log.service.impl.FishingServiceImpl;
 
+import java.util.NoSuchElementException;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -42,6 +48,16 @@ public class UserController {
         }
     }
 
+    @GetMapping("/session/{id}")
+    public ResponseEntity<FishingSessionResponse> getFishingSession(@PathVariable Long id) throws Exception{
+        try{
+            return ResponseEntity.ok(fishingService.getFishingSessionResponse(id));
+        }
+        catch(Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
     @PatchMapping("/session/update/{id}")
     public ResponseEntity<String> updateFishingSession(@PathVariable Long id, @RequestBody @Valid PatchFishingSessionRequest request) throws Exception{
         try{
@@ -65,7 +81,7 @@ public class UserController {
     }
 
     @PostMapping("/fish/add/{sessionId}")
-    public ResponseEntity<String> addFishToSession(@PathVariable Long sessionId, @RequestBody @Valid CreateFishDTO createFishDTO) throws Exception{
+    public ResponseEntity<String> addFishToSession(@PathVariable Long sessionId, @RequestBody @Valid CreateFishRequest createFishDTO) throws Exception{
         try{
             fishingService.addFishToSession(sessionId, createFishDTO);
             return ResponseEntity.ok("Fish added successfully");
@@ -87,7 +103,7 @@ public class UserController {
     }
 
     @PatchMapping("/fish/update/{fishId}")
-    public ResponseEntity<String> updateFishFromSession(@PathVariable Long fishId, @RequestBody @Valid PatchFishDTO patchFishDTO) throws Exception{
+    public ResponseEntity<String> updateFishFromSession(@PathVariable Long fishId, @RequestBody @Valid PatchFishRequest patchFishDTO) throws Exception{
         try{
             fishingService.updateFish(fishId, patchFishDTO);
             return ResponseEntity.ok("Fish updated successfully");
@@ -96,4 +112,25 @@ public class UserController {
             return ResponseEntity.badRequest().body("Fish update failed");
         }
     }
+
+    @GetMapping("/fish/{id}")
+    public ResponseEntity<FishResponse> getFish(@PathVariable Long id) throws Exception{
+        try{
+            return ResponseEntity.ok(fishingService.getFishResponse(id));
+        }
+        catch(Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @GetMapping("/fish/name/{fishId}")
+    public ResponseEntity<FishName> getFishName(@PathVariable Long fishId) {
+        try {
+            return ResponseEntity.ok(fishingService.getFishName(fishId));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+}
 }
