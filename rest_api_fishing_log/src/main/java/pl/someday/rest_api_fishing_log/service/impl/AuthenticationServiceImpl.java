@@ -7,9 +7,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import pl.someday.rest_api_fishing_log.dto.AuthDTO.JWTAuthenticationResponse;
-import pl.someday.rest_api_fishing_log.dto.AuthDTO.SignUpRequest;
-import pl.someday.rest_api_fishing_log.dto.AuthDTO.SingInRequest;
+import pl.someday.rest_api_fishing_log.dto.JWTAuthenticationResponse;
+import pl.someday.rest_api_fishing_log.dto.SignUpRequest;
+import pl.someday.rest_api_fishing_log.dto.SingInRequest;
 import pl.someday.rest_api_fishing_log.exception.CustomUsernameNotFoundException;
 import pl.someday.rest_api_fishing_log.exception.UsernameAlreadyExistsException;
 import pl.someday.rest_api_fishing_log.model.Role;
@@ -48,7 +48,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         var CustomUser = customUserServiceImpl.userDetailsService().loadUserByUsername(username);
         var jwt = jwtService.generateToken(CustomUser);
 
-        JWTAuthenticationResponse jwtAuthenticationResponse = new JWTAuthenticationResponse(jwt);
+        JWTAuthenticationResponse jwtAuthenticationResponse = new JWTAuthenticationResponse();
+        jwtAuthenticationResponse.setToken(jwt);
 
         return jwtAuthenticationResponse;
     }
