@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
-import pl.someday.rest_api_fishing_log.dto.JWTAuthenticationResponse;
-import pl.someday.rest_api_fishing_log.dto.SignUpRequest;
-import pl.someday.rest_api_fishing_log.dto.SingInRequest;
+import pl.someday.rest_api_fishing_log.dto.AuthDTO.JWTAuthenticationResponse;
+import pl.someday.rest_api_fishing_log.dto.AuthDTO.SignUpRequest;
+import pl.someday.rest_api_fishing_log.dto.AuthDTO.SingInRequest;
 import pl.someday.rest_api_fishing_log.service.AuthenticationService;
 
 
