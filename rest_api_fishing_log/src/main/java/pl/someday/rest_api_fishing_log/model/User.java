@@ -31,5 +31,8 @@ public class User {
     @NotNull
     private Role role;
 
+    @NotNull
+    private String resetPasswordToken;
+
     }
 

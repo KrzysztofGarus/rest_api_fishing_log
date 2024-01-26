@@ -7,6 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import pl.someday.rest_api_fishing_log.dto.FishDTO.CreateFishRequest;
 import pl.someday.rest_api_fishing_log.dto.FishDTO.FishResponse;
 import pl.someday.rest_api_fishing_log.dto.FishDTO.PatchFishRequest;
@@ -24,6 +25,7 @@ import pl.someday.rest_api_fishing_log.repository.UserRepository;
 import pl.someday.rest_api_fishing_log.service.FishingService;
 
 @Service
+@RequiredArgsConstructor
 public class FishingServiceImpl implements FishingService {
 
     private final FishRepository fishRepository;
@@ -32,18 +34,6 @@ public class FishingServiceImpl implements FishingService {
     private final FishingSessionRepository fishingSessionRepository;
     private final UserRepository userRepository;
     private final ModelConverterImpl modelConverter;
-
-
-    public FishingServiceImpl(FishRepository fishRepository, FishNameRepository fishNameRepository, FishingSpotRepository fishingSpotRepository, 
-        FishingSessionRepository fishingSessionRepository,UserRepository userRepository, ModelConverterImpl modelConverter) {
-
-        this.fishRepository = fishRepository;
-        this.fishNameRepository = fishNameRepository;
-        this.fishingSpotRepository = fishingSpotRepository;
-        this.fishingSessionRepository = fishingSessionRepository;
-        this.userRepository = userRepository;
-        this.modelConverter = modelConverter;
-    }
 
     @Override
     public void createFishingSession(CreateFishingSessionRequest request) {
