@@ -31,8 +31,9 @@ public class User {
     @NotNull
     private Role role;
 
-    @NotNull
-    private String resetPasswordToken;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "otp_id", referencedColumnName = "id")
+    private OTP otp;
 
     }
 

@@ -35,7 +35,7 @@ public class CustomUserServiceImpl implements CustomUserService {
     }
 
     @Override
-    public boolean doesUserExist(String username) {
+    public boolean UserExists(String username) {
         return userRepository.findByUsername(username).isPresent();
     }
 
