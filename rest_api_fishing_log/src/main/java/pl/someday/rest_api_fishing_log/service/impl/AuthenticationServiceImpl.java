@@ -42,7 +42,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     public JWTAuthenticationResponse signIn(SingInRequest singInRequest) throws CustomUsernameNotFoundException {
         String username = singInRequest.username(); 
-        if (!customUserServiceImpl.doesUserExist(username)) throw new CustomUsernameNotFoundException(username);
+        if (!customUserServiceImpl.UserExists(username)) throw new CustomUsernameNotFoundException(username);
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username,
                 singInRequest.password()));
         var CustomUser = customUserServiceImpl.userDetailsService().loadUserByUsername(username);
@@ -52,6 +52,4 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         return jwtAuthenticationResponse;
     }
-
-    
 }

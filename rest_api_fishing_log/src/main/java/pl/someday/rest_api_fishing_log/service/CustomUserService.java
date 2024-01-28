@@ -8,6 +8,6 @@ public interface CustomUserService {
 
     boolean isUsernameAlreadySigned(String username);
 
-    boolean doesUserExist(String username);
+    boolean UserExists(String username);
 
 }
