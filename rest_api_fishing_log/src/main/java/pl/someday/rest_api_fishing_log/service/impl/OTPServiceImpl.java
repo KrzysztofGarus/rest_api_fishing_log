@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
-import pl.someday.rest_api_fishing_log.exception.InvalidOTPException;
 import pl.someday.rest_api_fishing_log.model.OTP;
 import pl.someday.rest_api_fishing_log.repository.UserRepository;
 import pl.someday.rest_api_fishing_log.service.OTPService;
