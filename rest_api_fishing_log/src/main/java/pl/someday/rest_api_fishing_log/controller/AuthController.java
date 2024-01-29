@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,8 +45,8 @@ public class AuthController {
         return ResponseEntity.ok(authenticationService.signIn(singInRequest));
     }
 
-    @PostMapping("/forgot-password/{email}")
-    public ResponseEntity<String> forgotPassword(@PathVariable String email) throws Exception {
+    @PostMapping("/forgot-password")
+    public ResponseEntity<String> forgotPassword(@RequestBody String email) throws Exception {
         try {
             User user = userRepository.findByUsername(email).orElseThrow();
             OTP otp = otpService.generateOTP();
